@@ -979,6 +979,10 @@
     }
   }
 
+  let lastHistoryKey = null;
+  let historyInitialized = false;
+  let applyingPopState = false;
+
   function renderApp(){
     const app = document.getElementById('app');
     if(state.view === 'inicio'){ app.className = ''; app.innerHTML = renderInicio(); }
@@ -988,8 +992,20 @@
     else if(state.view === 'contacto'){ app.className = 'contacto'; app.innerHTML = renderContacto(); }
     else if(state.view === 'detalle' && state.selected){ app.className = 'detalle'; app.innerHTML = renderDetalle(state.selected); }
 
-    if(state.view === 'detalle' && state.selected){ history.replaceState(null, '', '#' + state.selected.id); }
-    else if(location.hash){ history.replaceState(null, '', location.pathname + location.search); }
+    const historyKey = state.view + ':' + (state.selected ? state.selected.id : '');
+    const historyUrl = (state.view === 'detalle' && state.selected) ? '#' + state.selected.id : (location.hash ? location.pathname + location.search : location.href);
+    const historyStateObj = { view: state.view, selectedId: state.selected ? state.selected.id : null };
+    if(applyingPopState){
+      lastHistoryKey = historyKey;
+    } else if(!historyInitialized){
+      history.replaceState(historyStateObj, '', historyUrl);
+      historyInitialized = true;
+      lastHistoryKey = historyKey;
+    } else if(historyKey !== lastHistoryKey){
+      history.pushState(historyStateObj, '', historyUrl);
+      lastHistoryKey = historyKey;
+    }
+    applyingPopState = false;
 
     renderNav();
     wireEvents();
@@ -1335,6 +1351,19 @@
   const initialId = location.hash.replace('#', '');
   const initialItem = initialId && (properties.find(p=>p.id===initialId) || terrenos.find(t=>t.id===initialId));
   if(initialItem){ state.selected = initialItem; state.view = 'detalle'; }
+
+  window.addEventListener('popstate', (e) => {
+    const st = e.state;
+    if(st){
+      state.view = st.view;
+      state.selected = st.selectedId ? (properties.find(p=>p.id===st.selectedId) || terrenos.find(t=>t.id===st.selectedId)) || null : null;
+    } else {
+      state.view = 'inicio';
+      state.selected = null;
+    }
+    applyingPopState = true;
+    renderApp();
+  });
 
   setupMagneticButtons();
   renderApp();
