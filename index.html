@@ -1,14 +1,14 @@
-<!doctype html><html><head><!-- frame-runtime --><base href="/_f/1787798857-6f64/"><script>window.__FRAME_PREAMBLE={"v":1,"capabilities":{"artifact":"artifact.Cg566fpb.js","assets":"assets.8Gk803W0.js","comments":"comments.GLuHR3zP.js","db":"db.h-3sndFg.js","downloads":"downloads.C3GSvEDP.js","embed":"embed.CxGAyc-v.js","mcp":"mcp.Bvma3qD7.js","network":"network.B5UA9Su4.js","permissions":"permissions.BNySkLV5.js","room":"room.BMMoe2BY.js","sample":"sample.BW2Uysoh.js","self":"artifact.Cg566fpb.js","user":"user.BpKav-Rf.js"},"transforms":"_transforms.CQm3TZ9K.js","comments":"_comments.DELvYLUh.js","translate":"_translate.5HCW4BJh.js"}</script><script>(function(){"use strict";var J=["light","dark","system"],Q=/^[A-Za-z0-9_-]{1,64}$/,H=/^[a-zA-Z_:][a-zA-Z0-9_:.-]{0,127}$/,ee=new Set(["class","hidden","value","checked"]);function te(e){const t=e.toLowerCase();return t.startsWith("data-")||t.startsWith("aria-")||ee.has(t)}var Me="http://www.w3.org/1999/xhtml",re="http://www.w3.org/2000/svg",ne=new Set(["script","style","iframe","noscript","noframes","noembed","xmp","plaintext","template","title","textarea","object","embed"]),oe=new Set(["script","style"]);function se(e){const t=e.localName.toLowerCase();return e.namespaceURI==="http://www.w3.org/1999/xhtml"?!ne.has(t):e.namespaceURI===re?!oe.has(t):!1}var ae=new Set(["html","head","body","frameset"]);function ie(e){return e.namespaceURI==="http://www.w3.org/1999/xhtml"&&ae.has(e.localName)}function ce(e){if(e===null||typeof e!="object")return!1;const t=e;if(typeof t.target!="string"||!Q.test(t.target)||t.text!==void 0&&typeof t.text!="string")return!1;if(t.attrsSet!==void 0){if(t.attrsSet===null||typeof t.attrsSet!="object")return!1;for(const[r,n]of Object.entries(t.attrsSet))if(!H.test(r)||typeof n!="string")return!1}if(t.attrsRemoved!==void 0){if(!Array.isArray(t.attrsRemoved))return!1;for(const r of t.attrsRemoved)if(typeof r!="string"||!H.test(r))return!1}return!0}function le(e,t){if(e===null||typeof e!="object")return!1;const{seq:r,elements:n}=e;if(typeof r!="number"||!Number.isSafeInteger(r)||!Array.isArray(n)||n.length===0||n.length>64)return!1;for(let s=0;s<n.length;s++)if(!t(n[s]))return!1;return!0}function ue(e){return e===null||typeof e!="object"?!1:le(e.__frame_patch,ce)}function fe(e){if(e===null||typeof e!="object")return!1;const t=e.__frame_init;return t!==null&&typeof t=="object"}function pe(e){return e!==null&&typeof e=="object"&&e.__frame_size_poke===!0}function de(e){if(e===null||typeof e!="object")return!1;const t=e.__frame_theme;if(t===null||typeof t!="object")return!1;const r=t.theme;return typeof r=="string"&&J.includes(r)}var A=/^[\w.-]+\.js$/;function me(e,t,r){return r?"inert":typeof t=="string"&&A.test(t)?e?[t]:"inert":e?"inert":"framed"}function he(){return{post(e,t){parent.postMessage(e,t)},on(e){const t=r=>{r.source===parent&&e(r.data,r.origin)};return addEventListener("message",t),()=>removeEventListener("message",t)}}}function _e(){return{post:()=>{},on:()=>()=>{}}}var O="__frame_scroll",ve=150,ye=310,we=160,be=3e4;function Ee(){let e=0,t=!1,r=!1,n=!1,s=0,a=null;const l=i=>{try{sessionStorage.setItem(O,JSON.stringify({y:i}))}catch{}},d=()=>{if(clearTimeout(e),a===null)return;const i=a;a=null,l(i)},v=()=>{if(t){t=!1;return}r=!0,a=scrollY,clearTimeout(e),e=setTimeout(d,ve)};try{addEventListener("scroll",v,{passive:!0}),addEventListener("pagehide",d)}catch{}const y=()=>{let i;try{i=sessionStorage.getItem(O)}catch{return null}if(i===null)return null;let m;try{m=JSON.parse(i)}catch{m=null}const u=m?.y;if(!(typeof u=="number"&&Number.isFinite(u)&&u>=0)){try{sessionStorage.removeItem(O)}catch{}return null}return u};let S=!1;const h=i=>{try{const m=scrollY;scrollTo({top:i,left:0,behavior:"instant"}),s=i,n=!0,clearTimeout(e),a=null,l(i);const u=scrollY;u!==m&&(t=!0),u!==i&&!S&&(S=!0,addEventListener("load",()=>{try{if(scrollY===u){const k=y();h(k!==null?k:s)}}catch{}},{once:!0}))}catch{}},w=()=>{try{return!!location.hash}catch{return!0}};let o=!1;const f=()=>{try{if(o||innerWidth>ye||innerHeight>we)return;o=!0;const i=Date.now(),m=()=>{try{removeEventListener("resize",m)}catch{}if(Date.now()-i>be||r||w())return;const u=y();h(u!==null?u:s)};addEventListener("resize",m)}catch{}};let _=!1,b=!1;return{restore(){if(_||(_=!0,w()))return;const i=y();i!==null&&(h(i),f())},promoted(){if(b||(b=!0,w()))return;const i=y();i!==null?(h(i),f()):n&&h(s)}}}function ge(e,t,r,n){let s=null;try{s=window.trustedTypes?.createPolicy("frame-runtime",{createScriptURL:v=>v})??null}catch{}const a=window.Worker,l=a?.prototype,d=Object.freeze({Worker:a,workerOn:l?.addEventListener,workerPost:l?.postMessage,workerTerminate:l?.terminate,fetch:window.fetch.bind(window),preventDefault:Event.prototype.preventDefault,policy:s,origins:t});r(e).then(v=>v?.bootTopLevel?v.bootTopLevel(d,n):n.settle()).catch(()=>n.settle())}var Oe="modulepreload",Ce=function(e){return"/"+e},je={},Ae=function(t,r,n){let s=Promise.resolve();function a(l){const d=new Event("vite:preloadError",{cancelable:!0});if(d.payload=l,window.dispatchEvent(d),!d.defaultPrevented)throw l}return s.then(l=>{for(const d of l||[])d.status==="rejected"&&a(d.reason);return t().catch(a)})},Re=window===top,q=Object.getOwnPropertyDescriptor(window,"claude"),T=me(Re,window.__FRAME_PREAMBLE?.topLevel,q?.writable===!1),C=typeof T=="object"&&T[0],p=C?_e():he();(function(){const e=Object.defineProperty,t=globalThis,r=["RTCPeerConnection","webkitRTCPeerConnection","RTCDataChannel","RTCIceCandidate","RTCSessionDescription","RTCRtpSender","RTCRtpReceiver"];let n=0;for(let s=0;s<r.length;s++){const a=r[s];try{e(t,a,{value:void 0,writable:!1,configurable:!1})}catch{try{delete t[a]}catch{}try{e(t,a,{value:void 0,writable:!1,configurable:!0})}catch{}}typeof t[a]=="function"&&n++}if(n&&T==="framed")try{p.post({__frame_rtc_lockdown_failed:n},"*")}catch{}})();var Se=1e4,W=Object.freeze([...window.__FRAME_PREAMBLE?.origins??["https://claude.ai","https://preview.claude.ai"]]);function $(e){for(const t of W)if(t.endsWith(":*"))try{const r=new URL(e);if(`${r.protocol}//${r.hostname}:*`===t)return!0}catch{}else if(e===t)return!0;return!1}var L=Object.freeze({...window.__FRAME_PREAMBLE?.capabilities}),j=window.__FRAME_PREAMBLE?.transforms,N=window.__FRAME_PREAMBLE?.comments,I=window.__FRAME_PREAMBLE?.translate;function R(e){return Ae(()=>import("/_runtime/"+e),void 0)}function K(e,t){return{contract:e.contract,changes:new Set(e.changes??[]),flags:new Set(e.flags??[]),capabilities:e.capabilities??{},capBudgets:e.capBudgets??{},transforms:new Map,shellOrigin:t,mount:D,pipe:()=>({wrap:(r,n)=>(...s)=>{try{return n(...s)}catch(a){return Promise.reject(a)}}})}}var P=null,E=null;function Y(e,t,r){try{Object.defineProperty(e,t,{value:r,writable:!1,configurable:!1,enumerable:!0})}catch{try{Object.defineProperty(e,t,{value:r,writable:!1,configurable:!0,enumerable:!0})}catch{}}}var B=!1;function ke(e,t){const r=[];for(const n of e.elements){const s=document.querySelector(`[data-id="${n.target}"]`);if(!s){p.post({__frame_patch_miss:{seq:e.seq}},t);return}if([...Object.keys(n.attrsSet??{}),...n.attrsRemoved??[]].some(a=>!te(a))){p.post({__frame_patch_miss:{seq:e.seq}},t);return}if(n.text!==void 0&&(!se(s)||ie(s))){p.post({__frame_patch_miss:{seq:e.seq}},t);return}for(const[a,l]of Object.entries(n.attrsSet??{}))if(!G(s,a)){try{s.setAttribute(a,l)}catch{}X(s,a,l)}for(const a of n.attrsRemoved??[])G(s,a)||(s.removeAttribute(a),X(s,a,null));typeof n.text=="string"&&(s.textContent=n.text),r.push(n.target)}try{document.dispatchEvent(new CustomEvent("claude:edit",{detail:{seq:e.seq,targets:r}}))}catch{}}function X(e,t,r){if(!(e instanceof HTMLInputElement))return;const n=t.toLowerCase();n==="checked"?e.checked=r!==null:n==="value"&&e.type!=="file"&&(e.value=r??"")}function G(e,t){const r=t.toLowerCase(),n=e;return r==="data-id"||(r==="value"||r==="checked")&&(n.__artifactSecret===!0||/^(password|hidden|file)$/.test(n.type??"")||/(^|\s)(cc-|one-time-code|current-password|new-password)/i.test(`${e.getAttribute("autocomplete")??""} ${n.autocomplete??""}`))}function V(e){const t=document.documentElement;e==="light"||e==="dark"?(t.dataset.theme=e,t.style.colorScheme=e,B=!0):B&&(delete t.dataset.theme,t.style.colorScheme="",B=!1)}var M=new Map;function Te(){let e;const t={u:new Promise(r=>{e=r}),r:r=>{t.done=!0,e(r)},done:!1,nulled:!1};return t}function U(){for(const e of M.values())e.done||(e.nulled=!0,e.r(null))}var Le=Object.freeze(Object.assign(Object.create(null),{call:Function.prototype.call,apply:Function.prototype.apply,bind:Function.prototype.bind})),D=(e,t)=>{const r=M.get(e);if(!r||r.done){r?.nulled&&E&&p.post({__frame_cap_telemetry:{kind:"cap-load-error",cap:e}},E);return}const n=typeof t=="function"?Object.setPrototypeOf(t,Le):Object.assign(Object.create(null),t);typeof n.then=="function"&&delete n.then,r.r(Object.freeze(n))};function Z(){const e=q?.value??{};Y(window,"claude",e);for(const t of Object.keys(L)){if(e[t]!==void 0){Y(e,t,e[t]);continue}M.set(t,Te())}if(e.use===void 0){const t=r=>{if(typeof r!="string"||!Object.hasOwn(L,r))return Promise.resolve(null);const n=M.get(r);return n?n.u:Promise.resolve(e[r]??null)};try{Object.defineProperty(e,"use",{value:t,writable:!0,configurable:!0,enumerable:!1})}catch{}}}if(T==="framed"){const e=j&&A.test(j)?R(j).catch(()=>{}):Promise.resolve(void 0),t=o=>{if(o.type==="auxclick"&&o.button!==1)return;const f=o.target,_=f&&f.closest?f.closest("a[href],area[href]"):null;if(!_)return;const b=_.getAttribute("href");if(!b)return;let i;try{i=new URL(b,document.baseURI)}catch{return}if((i.protocol==="http:"||i.protocol==="https:")&&i.origin!==location.origin){o.preventDefault();const m=(_.getAttribute("target")??"").toLowerCase(),u=o.type==="auxclick"||o.metaKey||o.ctrlKey||o.shiftKey||o.altKey||!["","_self","_top","_parent"].includes(m);p.post({__frame_nav:!0,url:i.href,newTab:u},"*")}};addEventListener("click",t,!0),addEventListener("auxclick",t,!0);const r={},n=o=>{o.isTrusted&&(r.pointer=!0)},s=o=>{o.isTrusted&&(r.click=!0)};addEventListener("pointermove",n,{capture:!0,passive:!0}),addEventListener("click",s,{capture:!0,passive:!0}),e.then(o=>{o?.wireNav&&(o.wireNav(),removeEventListener("click",t,!0),removeEventListener("auxclick",t,!0),removeEventListener("pointermove",n,!0),removeEventListener("click",s,!0),o.wireEngagement?.(r))});let a=null;try{a=Ee()}catch{}Z();let l=null,d=null,v=0;const y=p.on((o,f)=>{$(f)&&fe(o)&&(l=o.__frame_init,E=f,y(),clearTimeout(v),d?.())});p.post({__frame_connect:!0},"*");const S=new Promise(o=>{d=o,v=setTimeout(()=>{y(),o()},Se)}),h=document.readyState==="loading"?new Promise(o=>document.addEventListener("DOMContentLoaded",()=>o(),{once:!0})):Promise.resolve();h.then(()=>{try{a?.restore()}catch{}});const w={cb:null};p.on((o,f)=>{if($(f)&&pe(o)){try{a?.promoted()}catch{}w.cb?.()}}),S.then(async()=>{if(!l||!E){U();return}V(l.theme);const o=E;let f=!1,_=!1;p.on((c,x)=>{if(x!==o)return;de(c)&&V(c.__frame_theme.theme),ue(c)&&ke(c.__frame_patch,o);const g=c?.__fc_mode;g&&typeof g=="object"&&!f&&N&&A.test(N)&&(f=!0,R(N).then(z=>z.install?.(o,g.on===!0)).catch(()=>{}));const F=c?.__ft_cmd;F&&typeof F=="object"&&!_&&I&&A.test(I)&&(_=!0,R(I).then(z=>z.install?.(o,F)).catch(()=>{}))});const b=Object.keys(l.capabilities??{}).filter(c=>Object.hasOwn(L,c)).map(c=>[c,L[c]]).filter(c=>typeof c[1]=="string"&&A.test(c[1])),i=await Promise.allSettled(b.map(([,c])=>R(c))),m=await e,u=E;if(m?.buildBoot||p.post({__frame_cap_telemetry:{kind:"cap-load-error",cap:"_transforms"}},u),m?.buildBoot)try{P=m.buildBoot(l,m.TRANSFORMS??{},{shellOrigin:u,mount:D},c=>p.post({__frame_cap_telemetry:c},u))}catch{p.post({__frame_cap_telemetry:{kind:"cap-load-error",cap:"_transforms"}},u),P=K(l,u)}else P=K(l,u);const k=c=>p.post({__frame_cap_telemetry:{kind:"cap-load-error",cap:c}},u),Pe=P;i.forEach((c,x)=>{const g=b[x][0];if(c.status!=="fulfilled"){k(g);return}try{c.value?.install?.(Pe)}catch{k(g)}}),U(),await h,p.post({__frame_ready:!0},E),e.then(c=>c?.installSizeReporter?.(u,w))})}else C&&(Z(),ge(C,W,R,{settle:U,mount:D}))})();</script><!-- /frame-runtime --><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}</style></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}</style></head><body>
 <title id="page-title">VANAR Inmobiliaria — Pergamino | Venta y alquiler de propiedades</title>
 <meta name="description" id="meta-description" content="Compra, venta y alquiler de casas, departamentos y terrenos en Pergamino, Buenos Aires. Cumpliendo sueños hace más de 45 años.">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://claude.ai/code/artifact/297e1853-f4e7-49b1-9bc9-0c7fdd26dcae">
+<link rel="canonical" href="https://vanarinmobiliaria.com.ar/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="VANAR Inmobiliaria">
 <meta property="og:title" id="og-title" content="VANAR Inmobiliaria — Pergamino | Venta y alquiler de propiedades">
 <meta property="og:description" id="og-description" content="Compra, venta y alquiler de casas, departamentos y terrenos en Pergamino, Buenos Aires. Cumpliendo sueños hace más de 45 años.">
 <meta property="og:image" content="https://vanarinmobiliaria.com.ar/wp-content/uploads/2024/07/Logo-Vanar.png">
-<meta property="og:url" content="https://claude.ai/code/artifact/297e1853-f4e7-49b1-9bc9-0c7fdd26dcae">
+<meta property="og:url" content="https://vanarinmobiliaria.com.ar/">
 <meta property="og:locale" content="es_AR">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" id="twitter-title" content="VANAR Inmobiliaria — Pergamino | Venta y alquiler de propiedades">
@@ -128,11 +128,11 @@
   .navlinks button:hover{ background:var(--neutral-200); }
   .nav-cta{
     margin-left:auto; display:inline-flex; align-items:center; gap:8px;
-    background:var(--accent); color:#fff; font-family:'Archivo',sans-serif; font-weight:700; font-size:13px;
+    background:var(--accent-600); color:#fff; font-family:'Archivo',sans-serif; font-weight:700; font-size:13px;
     padding:11px 20px; border-radius:var(--r-pill); text-decoration:none; white-space:nowrap;
     transition:background-color .18s ease, transform .15s ease;
   }
-  .nav-cta:hover{ background:var(--accent-600); color:#fff; transform:translateY(-1px); }
+  .nav-cta:hover{ background:var(--accent-700); color:#fff; transform:translateY(-1px); }
   .hamburger{
     display:none; margin-left:8px; background:transparent; border:2px solid var(--text); border-radius:var(--r-pill);
     padding:8px 10px; cursor:pointer; color:var(--text); align-items:center; justify-content:center;
@@ -147,8 +147,8 @@
     transition:background-color .18s ease, color .18s ease, border-color .18s ease, transform .15s ease, box-shadow .18s ease;
   }
   .btn:active{ transform:scale(.97); }
-  .btn-primary{ background:var(--accent); color:#fff; box-shadow:var(--shadow-sm); }
-  .btn-primary:hover{ background:var(--accent-600); color:#fff; box-shadow:var(--shadow-md); transform:translateY(-1px); }
+  .btn-primary{ background:var(--accent-600); color:#fff; box-shadow:var(--shadow-sm); }
+  .btn-primary:hover{ background:var(--accent-700); color:#fff; box-shadow:var(--shadow-md); transform:translateY(-1px); }
   .btn-ghost{ background:transparent; border-color:var(--text); color:var(--text); }
   .btn-ghost:hover{ background:var(--text); color:var(--bg); }
   .btn-block{ width:100%; }
@@ -163,6 +163,8 @@
   select.input{ appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23201e1d' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; }
   textarea.input{ min-height:100px; resize:vertical; border-radius:var(--r-md); }
   .input:focus{ outline:2px solid var(--accent-500); outline-offset:1px; }
+  .hero-op-static{ display:flex; align-items:center; background:var(--neutral-200); color:var(--text); cursor:default; }
+  .hero-op-static .hero-op-note{ color:color-mix(in srgb, var(--text) 55%, transparent); margin-left:4px; }
 
   /* ---------- Hero ---------- */
   .hero{
@@ -227,7 +229,7 @@
   }
   .card .tag{
     position:absolute; top:10px; left:10px; background:var(--accent2); color:#fff;
-    font:800 10px 'Archivo',sans-serif; text-transform:uppercase; letter-spacing:.05em; padding:5px 12px; border-radius:var(--r-pill);
+    font:800 11px 'Archivo',sans-serif; text-transform:uppercase; letter-spacing:.05em; padding:5px 12px; border-radius:var(--r-pill);
   }
   .card .tag ~ .cat-pill{ top:44px; }
   .card .share-btn{
@@ -258,7 +260,7 @@
 
   .listing-layout{ display:grid; grid-template-columns:1fr 260px; gap:32px; align-items:start; }
   .cat-widget{ background:#fff; border-radius:var(--r-md); box-shadow:var(--shadow-sm); overflow:hidden; }
-  .cat-widget h3{ font:800 15px 'Archivo',sans-serif; padding:18px; margin:0; border-bottom:2px solid var(--divider); }
+  .cat-widget h2{ font:800 15px 'Archivo',sans-serif; padding:18px; margin:0; border-bottom:2px solid var(--divider); }
   .cat-widget button{
     width:100%; display:flex; justify-content:space-between; align-items:center; gap:8px;
     padding:12px 18px; border:none; border-bottom:1px solid var(--divider); background:transparent; cursor:pointer;
@@ -382,8 +384,8 @@
   .detalle-specs .v{ font-size:16px; font-weight:700; }
   .detalle-desc{ font-size:15px; line-height:1.7; margin:0 0 28px; }
   .detalle-actions{ display:flex; gap:12px; flex-wrap:wrap; }
-  .btn-whatsapp{ background:#1ea15a; color:#fff; }
-  .btn-whatsapp:hover{ background:#0d6e3a; color:#fff; }
+  .btn-whatsapp{ background:var(--accent-600); color:#fff; }
+  .btn-whatsapp:hover{ background:var(--accent-700); color:#fff; }
 
   /* ---------- Footer ---------- */
   footer{
@@ -502,7 +504,7 @@
 
   function fmtPrice(n){ return n ? ('U$S ' + n.toLocaleString('es-AR')) : 'Consultar precio'; }
 
-  const PAGE_URL = 'https://claude.ai/code/artifact/297e1853-f4e7-49b1-9bc9-0c7fdd26dcae';
+  const PAGE_URL = 'https://vanarinmobiliaria.com.ar/';
 
   function itemLink(item){
     return `${PAGE_URL}#${item.id}`;
@@ -520,6 +522,18 @@
     ].filter(Boolean);
     // sin número de destino: WhatsApp deja elegir a quién enviárselo (compartir, no contactar a la inmobiliaria)
     return `https://wa.me/?text=${encodeURIComponent(lines.join('\n'))}`;
+  }
+
+  function waInquiryUrl(item){
+    const lines = [
+      `Hola VANAR, quiero consultar por esta propiedad:`,
+      `*${item.titulo}*`,
+      `${item.barrio ? item.barrio + ', ' : ''}${item.ciudad}`,
+      item.precioFmt,
+      itemLink(item),
+    ].filter(Boolean);
+    // con número de destino: consulta directa a la agencia, no compartir
+    return `https://wa.me/542477688875?text=${encodeURIComponent(lines.join('\n'))}`;
   }
 
   const propertiesRaw = [
@@ -609,7 +623,7 @@
     if(!isTerreno && item.hab) specs.push(`<span>${item.hab} dorm</span>`);
     if(!isTerreno && item.banos) specs.push(`<span>${item.banos} baños</span>`);
     const media = item.fotos && item.fotos[0]
-      ? `<img src="${item.fotos[0]}" alt="${esc(item.titulo)}">`
+      ? `<img src="${item.fotos[0]}" alt="${esc(item.titulo)}" loading="lazy" decoding="async">`
       : (isTerreno ? ICON_PIN : ICON_HOME);
     return `
       <div class="card" data-open="${item.id}">
@@ -646,8 +660,8 @@
           <h1>Cumpliendo sueños<br>hace más de 45 años</h1>
           <p>Con suma experiencia en el rubro inmobiliario, ofrecemos las mejores propiedades brindando respaldo, transparencia y rentabilidad a nuestros clientes.</p>
           <div class="search-box">
-            <div class="field"><label>Operación</label><select class="input" id="heroOperacion"><option value="Ventas">Ventas</option><option value="Alquiler" disabled>Alquiler (próximamente)</option></select></div>
-            <div class="field"><label>Categoría</label><select class="input" id="heroCategoria"><option value="Todas">Todas</option><option value="Casas">Casas</option><option value="Departamentos">Departamentos</option><option value="Terrenos">Terrenos</option></select></div>
+            <div class="field"><label>Operación</label><div class="input hero-op-static" aria-disabled="true">Ventas <span class="hero-op-note">· Alquiler próximamente</span></div></div>
+            <div class="field"><label for="heroCategoria">Categoría</label><select class="input" id="heroCategoria"><option value="Todas">Todas</option><option value="Casas">Casas</option><option value="Departamentos">Departamentos</option><option value="Terrenos">Terrenos</option></select></div>
             <button class="btn btn-primary" id="heroSearchBtn">Buscar</button>
           </div>
         </div>
@@ -688,7 +702,7 @@
     ].filter(r => r.cat === 'todos' || r.cat === null || r.count > 0);
     return `
       <aside class="cat-widget">
-        <h3>Propiedades por categoría</h3>
+        <h2>Propiedades por categoría</h2>
         ${rows.map(r => `
           <button data-catnav="${r.view}" data-cat="${r.cat ?? ''}" class="${r.view==='propiedades' && activeCategoria===r.cat ? 'active' : ''}">
             <span>${r.label}</span><span class="n">(${r.count})</span>
@@ -724,11 +738,11 @@
         <div class="listing-layout">
           <div>
             <div class="filters">
-              <div class="field"><label>Categoría</label><select class="input" id="f-categoria">${filterOptionsHtml(categoriaOptions, pf.categoria)}</select></div>
-              <div class="field"><label>Ciudad</label><select class="input" id="f-ciudad">${filterOptionsHtml(ciudadOptions, pf.ciudad)}</select></div>
-              <div class="field"><label>Barrio</label><select class="input" id="f-barrio">${filterOptionsHtml(barrioOptions, pf.barrio)}</select></div>
-              <div class="field"><label>Precio</label><select class="input" id="f-precio">${filterOptionsHtml(precioOptions, pf.precio)}</select></div>
-              <div class="field"><label>Dormitorios</label><select class="input" id="f-hab">${filterOptionsHtml(habOptions, pf.hab)}</select></div>
+              <div class="field"><label for="f-categoria">Categoría</label><select class="input" id="f-categoria">${filterOptionsHtml(categoriaOptions, pf.categoria)}</select></div>
+              <div class="field"><label for="f-ciudad">Ciudad</label><select class="input" id="f-ciudad">${filterOptionsHtml(ciudadOptions, pf.ciudad)}</select></div>
+              <div class="field"><label for="f-barrio">Barrio</label><select class="input" id="f-barrio">${filterOptionsHtml(barrioOptions, pf.barrio)}</select></div>
+              <div class="field"><label for="f-precio">Precio</label><select class="input" id="f-precio">${filterOptionsHtml(precioOptions, pf.precio)}</select></div>
+              <div class="field"><label for="f-hab">Dormitorios</label><select class="input" id="f-hab">${filterOptionsHtml(habOptions, pf.hab)}</select></div>
             </div>
             ${filtered.length
               ? `<div class="card-grid">${filtered.map(p => cardHtml(p,false)).join('')}</div>`
@@ -757,10 +771,10 @@
         <h1>Terrenos</h1>
         <p class="count">${filtered.length} terrenos disponibles</p>
         <div class="filters">
-          <div class="field"><label>Ciudad</label><select class="input" id="f-t-ciudad">${filterOptionsHtml(ciudadOptions, tf.ciudad)}</select></div>
-          <div class="field"><label>Barrio</label><select class="input" id="f-t-barrio">${filterOptionsHtml(barrioOptions, tf.barrio)}</select></div>
-          <div class="field"><label>Precio</label><select class="input" id="f-t-precio">${filterOptionsHtml(precioOptions, tf.precio)}</select></div>
-          <div class="field"><label>Tamaño (m²)</label><select class="input" id="f-t-tamano">${filterOptionsHtml(tamanoOptions, tf.tamano)}</select></div>
+          <div class="field"><label for="f-t-ciudad">Ciudad</label><select class="input" id="f-t-ciudad">${filterOptionsHtml(ciudadOptions, tf.ciudad)}</select></div>
+          <div class="field"><label for="f-t-barrio">Barrio</label><select class="input" id="f-t-barrio">${filterOptionsHtml(barrioOptions, tf.barrio)}</select></div>
+          <div class="field"><label for="f-t-precio">Precio</label><select class="input" id="f-t-precio">${filterOptionsHtml(precioOptions, tf.precio)}</select></div>
+          <div class="field"><label for="f-t-tamano">Tamaño (m²)</label><select class="input" id="f-t-tamano">${filterOptionsHtml(tamanoOptions, tf.tamano)}</select></div>
         </div>
         ${filtered.length
           ? `<div class="card-grid">${filtered.map(t => cardHtml(t,true)).join('')}</div>`
@@ -796,7 +810,7 @@
 
         <h2 style="font-size:20px;margin:48px 0 20px">Nuestra oficina</h2>
         <div class="photo-grid">
-          ${photos.slice(1).map(p => `<div><img src="${p}" alt="VANAR Inmobiliaria"></div>`).join('')}
+          ${photos.slice(1).map((p, i) => `<div><img src="${p}" alt="Oficina de VANAR Inmobiliaria, foto ${i+2}" loading="lazy" decoding="async"></div>`).join('')}
         </div>
       </div>`;
   }
@@ -811,27 +825,27 @@
           <div>
             ${c.sent ? `
               <div class="sent-box">
-                <div class="h">Mensaje enviado</div>
-                <div class="b">Gracias, ${esc(c.nombre)}. Un asesor te contactará pronto.</div>
+                <div class="h">${c.viaFallback ? 'Terminá el envío desde tu correo' : 'Mensaje enviado'}</div>
+                <div class="b">${c.viaFallback ? `Gracias, ${esc(c.nombre)}. Abrimos tu app de correo con el mensaje listo para contacto@vanarinmobiliaria.com.ar — solo falta que lo envíes.` : `Gracias, ${esc(c.nombre)}. Un asesor te contactará pronto.`}</div>
               </div>
             ` : `
               <form class="contact-form" id="contactForm">
-                <div class="field"><label>Nombre</label><input class="input" name="nombre" required placeholder="Tu nombre completo" value="${esc(c.nombre)}"></div>
+                <div class="field"><label for="f-nombre">Nombre</label><input class="input" id="f-nombre" name="nombre" required placeholder="Tu nombre completo" value="${esc(c.nombre)}"></div>
                 <div class="row2">
-                  <div class="field"><label>Celular</label><input class="input" name="celular" placeholder="2477 000000" value="${esc(c.celular)}"></div>
-                  <div class="field"><label>Correo electrónico</label><input class="input" type="email" name="email" required placeholder="tu@correo.com" value="${esc(c.email)}"></div>
+                  <div class="field"><label for="f-celular">Celular</label><input class="input" id="f-celular" name="celular" placeholder="2477 000000" value="${esc(c.celular)}"></div>
+                  <div class="field"><label for="f-email">Correo electrónico</label><input class="input" id="f-email" type="email" name="email" required placeholder="tu@correo.com" value="${esc(c.email)}"></div>
                 </div>
                 <div class="field">
-                  <label>Ciudad</label>
-                  <select class="input" name="ciudad" required>
+                  <label for="f-ciudad-contacto">Ciudad</label>
+                  <select class="input" id="f-ciudad-contacto" name="ciudad" required>
                     <option value="">Seleccionar</option>
                     <option value="Pergamino" ${c.ciudad==='Pergamino'?'selected':''}>Pergamino</option>
                     <option value="Fontezuelas" ${c.ciudad==='Fontezuelas'?'selected':''}>Fontezuelas</option>
                     <option value="Otra" ${c.ciudad==='Otra'?'selected':''}>Otra</option>
                   </select>
                 </div>
-                <div class="field"><label>Mensaje</label><textarea class="input" name="mensaje" required placeholder="Cuéntanos qué tipo de propiedad buscas">${esc(c.mensaje)}</textarea></div>
-                <button type="submit" class="btn btn-primary btn-block">Enviar mensaje</button>
+                <div class="field"><label for="f-mensaje">Mensaje</label><textarea class="input" id="f-mensaje" name="mensaje" required placeholder="Cuéntanos qué tipo de propiedad buscas">${esc(c.mensaje)}</textarea></div>
+                <button type="submit" class="btn btn-primary btn-block" ${c.sending ? 'disabled' : ''}>${c.sending ? 'Enviando…' : 'Enviar mensaje'}</button>
               </form>
             `}
           </div>
@@ -882,7 +896,7 @@
     const media = fotos.length
       ? `
         <div class="carousel">
-          <img src="${fotos[idx]}" alt="${esc(item.titulo)} — foto ${idx+1} de ${fotos.length}">
+          <img src="${fotos[idx]}" alt="${esc(item.titulo)} — foto ${idx+1} de ${fotos.length}" decoding="async">
           ${fotos.length > 1 ? `
             <button class="carousel-nav prev" id="galPrev" aria-label="Foto anterior"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
             <button class="carousel-nav next" id="galNext" aria-label="Foto siguiente"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
@@ -912,8 +926,9 @@
           ></iframe>
         </div>
         <div class="detalle-actions">
+          <a class="btn btn-whatsapp" href="${waInquiryUrl(item)}" target="_blank" rel="noopener">${ICON_WHATSAPP} Consultar por WhatsApp</a>
           <button class="btn btn-primary" id="goContacto">Solicitar información</button>
-          <a class="btn btn-whatsapp" href="${waShareUrl(item)}" target="_blank" rel="noopener">${ICON_WHATSAPP} Compartir por WhatsApp</a>
+          <a class="btn btn-ghost" href="${waShareUrl(item)}" target="_blank" rel="noopener">Compartir</a>
         </div>
       </div>`;
   }
@@ -941,7 +956,7 @@
   function renderLightboxBody(fotos){
     const idx = state.galleryIndex;
     document.getElementById('lightboxBody').innerHTML = `
-      <img src="${fotos[idx]}" alt="Foto ${idx+1} de ${fotos.length}">
+      <img src="${fotos[idx]}" alt="Foto ${idx+1} de ${fotos.length}" decoding="async">
       ${fotos.length > 1 ? `
         <button class="carousel-nav prev" id="lbPrev" aria-label="Foto anterior"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
         <button class="carousel-nav next" id="lbNext" aria-label="Foto siguiente"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
@@ -1309,13 +1324,39 @@
     if(tt) tt.addEventListener('change', e => { state.terrenoFilters.tamano = e.target.value; renderApp(); });
 
     const form = document.getElementById('contactForm');
-    if(form) form.addEventListener('submit', (e) => {
+    if(form) form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const fd = new FormData(form);
-      state.contact = {
+      const data = {
         nombre: fd.get('nombre') || '', celular: fd.get('celular') || '', email: fd.get('email') || '',
-        ciudad: fd.get('ciudad') || '', mensaje: fd.get('mensaje') || '', sent: true
+        ciudad: fd.get('ciudad') || '', mensaje: fd.get('mensaje') || ''
       };
+      state.contact = { ...data, sending: true };
+      renderApp();
+
+      let viaFallback = false;
+      try {
+        const body = new FormData();
+        body.append('nombre', data.nombre);
+        body.append('celular', data.celular);
+        body.append('email', data.email);
+        body.append('ciudad', data.ciudad);
+        body.append('mensaje', data.mensaje);
+        body.append('_subject', `Nueva consulta de ${data.nombre} — sitio VANAR`);
+        body.append('_template', 'table');
+        body.append('_captcha', 'false');
+        const res = await fetch('https://formsubmit.co/ajax/contacto@vanarinmobiliaria.com.ar', {
+          method: 'POST', headers: { 'Accept': 'application/json' }, body
+        });
+        if(!res.ok) throw new Error('formsubmit request failed');
+      } catch(err){
+        viaFallback = true;
+        const subject = encodeURIComponent(`Consulta de ${data.nombre} — sitio VANAR`);
+        const bodyText = encodeURIComponent(`Nombre: ${data.nombre}\nCelular: ${data.celular}\nCiudad: ${data.ciudad}\n\n${data.mensaje}`);
+        window.open(`mailto:contacto@vanarinmobiliaria.com.ar?subject=${subject}&body=${bodyText}`, '_blank');
+      }
+
+      state.contact = { ...data, sent: true, viaFallback };
       renderApp();
     });
   }
