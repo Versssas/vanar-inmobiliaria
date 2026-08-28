@@ -481,7 +481,7 @@
     </button>
   </nav>
 
-  <main id="app" style="flex:1"></main>
+  <main id="app" style="flex:1"><div style="padding:120px 20px;text-align:center;color:color-mix(in srgb, #201e1d 45%, transparent)">Cargando…</div></main>
 
   <div class="lightbox" id="lightbox">
     <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
@@ -495,7 +495,7 @@
 </div>
 
 <script>
-(function(){
+(async function(){
 
   gsap.registerPlugin(ScrollTrigger);
   const REDUCE_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -540,56 +540,26 @@
     return `https://wa.me/542477688875?text=${encodeURIComponent(lines.join('\n'))}`;
   }
 
-  const propertiesRaw = [
-    ['Merced 446 – 4to. A','Merced 446','Centro','Pergamino','Departamento',null,74,3,2,'','Departamento de 74 m2 + 3 de balcón, 3 dormitorios, living-comedor, cocina-comedor, lavadero, 2 baños y balcón.',['img/e68d1c3e1204.jpg','img/1a8f5b5d598d.jpg','img/ccde13b0b881.jpg','img/c2471cc252a9.jpg','img/5944489db00c.jpg','img/cfe0513b544a.jpg','img/c7868b505187.jpg','img/f6d99613a8ae.jpg']],
-    ['11 de Septiembre 182','11 de Septiembre 182','Centro','Pergamino','Departamento',60000,null,2,1,'','Piso 1ro, dpto "C": 2 dormitorios con placares, baño completo, living-comedor, cocina, lavadero, balcón.',['img/97da7105aae3.jpg','img/603f0ad8a6dd.jpg','img/ccdaa0b41119.jpg','img/b2320f69daf3.jpg','img/0859dfe9f0c1.jpg','img/86abffcfcd81.jpg','img/572800c743a8.jpg','img/a4158d899c94.jpg']],
-    ['Rivadavia 35','Rivadavia 35','Centro','Pergamino','Casa',80000,122,2,1,'','Terreno de 8,20 x 17,50, casa de 122 m2, 2 dormitorios, baño, living-comedor, cocina, patio embaldosado.',['img/e89ff4ee39ea.jpg','img/377a572e07a9.jpg','img/753a59fbb862.jpg','img/2cb39eb85f51.jpg','img/3be576a54fec.jpg','img/5507e39c2a64.jpg','img/e56ecbe7489e.jpg','img/863258cc5d50.jpg','img/4c44f3d810b8.jpg','img/2fc4b1dcdd09.jpg']],
-    ['Merced 648','Merced 648','Centro','Pergamino','Departamento',73000,51,1,1,'','Superficie cubierta 50,85 m2, 1 dormitorio con placard, baño, living-comedor, cocina y cochera.',['img/d9adb5646f53.jpg','img/2cb0a40e3494.jpg','img/e9ba31fe8d63.jpg','img/46ea2c25c283.jpg','img/7ada7031e8cc.jpg']],
-    ['Moreno 384','Moreno 384','Centro','Pergamino','Departamento',null,null,2,1,'','Planta alta de 2 dormitorios, baño, living-comedor, cocina-comedor, balcón, terraza.',['img/c66564ec8d72.jpg','img/49fd831a376e.jpg','img/1d88c9588b1f.jpg','img/82858e4ec765.jpg','img/3fd2a59b6677.jpg','img/f26a0274e8fb.jpg','img/fc19eb64efd1.jpg','img/41f00e7c6d49.jpg','img/0364744cb3ab.jpg','img/723b34fc2d72.jpg']],
-    ['Florida 450','Florida 450','Centro','Pergamino','Casa',145000,166,3,2,'Destacado','Terreno 10 x 24, casa de 166 m2 cubiertos aprox., 3 dormitorios, 2 baños, living-comedor, cocina, lavadero, garage, patio.',['img/04a57276e8ff.jpg','img/49d9389345b2.jpg','img/f1c01b64a1a7.jpg','img/624cc40ad3b9.jpg','img/bb1f374c1d28.jpg','img/79dcd60ad172.jpg']],
-    ['Florida 522','Florida 522','Centro','Pergamino','Departamento',null,80,2,2,'','Living-comedor, cocina, balcón, baño completo, 2 dormitorios (1 en suite) y cochera. Superficie: 80 m2 + cochera.',['img/5fc2e456e7ab.jpg','img/b6f250259430.jpg','img/2b6fdee94822.jpg','img/84e54f7e64e1.jpg','img/ccce2e9e6902.jpg','img/1554a06ddff3.jpg','img/ac3dba77e81e.jpg','img/b9ed509a999a.jpg','img/e2ffb1e96f42.jpg']],
-    ['Dr. Alem 1372','Dr. Alem 1372','Centro','Pergamino','Departamento',62000,null,1,1,'','Al frente, 1 dormitorio con placard, baño, living-comedor-cocina, balcón, parrilla.',['img/2a188df219e5.jpg','img/cd91a50a7e75.jpg','img/d15263b678b1.jpg','img/f8f471ec1d0b.jpg','img/3c7d76d3a327.jpg','img/337cf5d99e90.jpg']],
-    ['Chacras de Pergamino','Chacras de Pergamino','Chacras De Pergamino','Pergamino','Casa',295000,260,3,2,'Destacado','Casa de 260 m2 sobre un lote de 1200 m2. Amplio living-cocina-comedor, toilette, baño completo, 3 dormitorios (1 en suite).',['img/17092a2b8aac.jpg','img/c97fbf192639.jpg','img/b4def7df19ab.jpg','img/89a59883da5b.jpg','img/2f496494e1e5.jpg','img/4cfad2b1f0fd.jpg','img/34b0d912177b.jpg','img/d65de89d651b.jpg','img/428f5b44b1d2.jpg']],
-    ['Quinta Fontezuela — Servidia y E. Peña','Servidia 220 esq. Elena Peña','','Fontezuelas','Casa',null,747,2,1,'','Terreno de 747 m2, casa de 2 dormitorios, living-comedor, cocina, baño completo, lavadero, baño exterior, galería, parrillero, pileta de fibra.',['img/86df80a1414f.jpg','img/ca3c9cc732bd.jpg','img/de9a25770148.jpg','img/d2b994832ee7.jpg','img/00e6f92ac90c.jpg','img/e02e26b6fc41.jpg','img/8eb08127cbc7.jpg']],
-    ['11 de Septiembre y San Nicolás','11 de Septiembre 585','Centro','Pergamino','Departamento',null,null,2,1,'','2 dormitorios con placares, baño, living-comedor, cocina-lavadero.',['img/ca0914b5c7b0.jpg','img/9eb211899987.jpg','img/8472c8c2e1bc.jpg']],
-    ['25 de Mayo 1326','25 de Mayo 1326','Centro','Pergamino','Casa',120000,155,4,2,'','Terreno 8 x 20, casa de 155 m2 cubiertos. En planta baja: living-comedor, comedor diario, cocina, 2 dormitorios, baño completo, garage, patio, lavadero. En planta alta 2 dormitorios con placares, baño completo, balcón terraza.',['img/4c8c74ebdd80.jpg','img/6fc2e0073673.jpg','img/226b57124944.jpg','img/f9a078bf55a9.jpg','img/a73906827a14.jpg','img/ee571117ce75.jpg','img/f68c6cc48814.jpg']],
-    ['Barrio La Amalia','','La Amalia','Pergamino','Casa',null,270,3,3,'','Terreno de 22,50 x 50 mts. Casa de 270 m2 cubiertos, 3 dormitorios, 3 baños, living-comedor, escritorio, cocina comedor, lavadero, quincho cerrado, galería, garage doble, pileta de material. Se toma depto de 2 dormitorios con cochera.',['img/52ed78f93173.jpg','img/b6b7d76c278a.jpg','img/fa38a6b7ced0.jpg','img/79007cf3a5c1.jpg']],
-    ['Dr. Alem al 1300','Alem 1300','Centro','Pergamino','Departamento',null,109,3,1,'','Superficie cubierta 109 m2, 3 dormitorios, baño completo, living-comedor, cocina-lavadero, balcón, cochera, parrilla.',['img/3d107baf9968.jpg','img/b680beb1f216.jpg','img/0a31777a0dd9.jpg','img/09b1039d76ca.jpg','img/0eeaf48cc106.jpg','img/6da97e2c145f.jpg','img/c90b60a7ca19.jpg','img/7ab4a5f8df5b.jpg']],
-    ['Francia esq. Alsina','Francia 31','Martín Illia','Pergamino','Casa',null,null,3,2,'','Terreno 11 x 24, casa antigua en esquina de 1 dormitorio, baño, living-comedor, cocina, patio. Más otra casa más moderna de 2 dormitorios, baño, living-comedor, cocina, garage, patio.',['img/077829bb892d.jpg']],
-    ['Jorge Newbery 2181','Jorge Newbery 2181','25 de Mayo','Pergamino','Casa',null,105,3,1,'','Terreno 6,50 x 31, casa de 105 m2 cubiertos. En planta baja: entrada para autos, living-comedor, cocina, toilette, estar diario, jardín. En planta alta 3 dormitorios con baño completo. Se toma camioneta en parte de pago.',['img/37f35a88426c.jpg','img/13bc838b2d43.jpg','img/edbced9c94aa.jpg','img/95981b275e10.jpg','img/2bf85b33eaf2.jpg','img/de4dd521187a.jpg']],
-    ['Mitre 342','Mitre 342','Centro','Pergamino','Casa',null,null,3,2,'','En planta baja: consultorio con sala de espera y baño, toillette, amplio living-comedor, cocina-comedor, galería cerrada, patio de luz, jardín, garage. En planta alta: 3 habitaciones, baño, lavadero, terraza.',['img/564ba9b4ab51.jpg']],
-    ['Prudencio Gonzalez 495','Prudencio Gonzalez 495','Centro, Trocha','Pergamino','Casa',null,91,2,1,'','Terreno 9,67 x 17 mts, casa 91 m2 cubiertos, 2 dormitorios, living, cocina-comedor, patio, garage para 2 autos.',['img/de2e1c9098b4.jpg']],
-    ['Rivadavia 750','Rivadavia 750','Centro','Pergamino','Casa',100000,140,3,2,'','Terreno 7 x 41, casa de 140 m2 cubiertos, 3 dormitorios, baño, living-comedor, cocina, baño exterior, garage, amplio jardín.',['img/6b88c0f33c34.jpg','img/db993fa064e5.jpg','img/9daf4df6fa5a.jpg','img/9f8358a61018.jpg']],
-    ['Italia 864','Italia 864','Centro','Pergamino','Casa',null,199,4,3,'','Terreno 12 x 24, casa de 199 m2 cubiertos, living-comedor amplio, escritorio, 3 baños, 4 dormitorios, cocina-comedor, garage, jardín.',['img/b0bb25d3ff81.jpg','img/c1de637c47f5.jpg','img/2704e51e9ede.jpg','img/7a246aab485c.jpg','img/5a232d7670d6.jpg']],
-    ['Echeverría 130','Echeverría 130','','Pergamino','Departamento',null,140,2,null,'','Piso a estrenar de 140 m2, 2 dormitorios (1 en suite con vestidor), baño completo, toilette, living-comedor, cocina, lavadero, balcón terraza, parrilla, cochera, calefacción por piso radiante, excelentes terminaciones.',['img/3766c00db892.jpg','img/c69c35f0c243.jpg','img/87bf05f91969.jpg','img/ed64c120b766.jpg','img/2f07d60b9567.jpg','img/cf50c2d32881.jpg']],
-    ['Estrada 746','Estrada 746','Centro','Pergamino','Casa',null,null,3,2,'','Terreno 5,50 x 35, casa de 3 dormitorios, 2 baños, living, cocina-comedor, garage, amplio jardín.',['img/4c0acb3c0b78.jpg','img/055444e4885f.jpg','img/0185601d4ed0.jpg','img/aa561bd508ff.jpg','img/a25de07007aa.jpg','img/b1d40c78af89.jpg','img/477fbb167eca.jpg']],
-    ['Florida 44','Florida 44','Centro','Pergamino','Casa',75000,null,2,1,'','Terreno 9,95 x 26, casa de 2 dormitorios, baño, living, comedor, cocina, estar diario, garage, taller con baño, jardín, parrilla.',['img/768c25e707c0.jpg','img/100e0ce8ef0b.jpg','img/f72c024ca004.jpg','img/3fcc1bfb2604.jpg','img/cd17077d2612.jpg']],
-    ['Almirante Brown 316','Almirante Brown 316','','Pergamino','Casa',59000,null,3,1,'','Terreno de 215 m2 (26 x 10), casa de 90 m2 cubiertos, 3 dormitorios, baño, living-comedor, cocina, jardín, guardacoche.',['img/b52a2f17fea4.jpg','img/b5aef83e5696.jpg','img/2bc3c5288586.jpg','img/3937bb0b0bf7.jpg','img/44b9cb816978.jpg','img/bbed468dd1bd.jpg','img/70a9acf32d6d.jpg','img/a2e70a5e8757.jpg']],
-    ['Estrada 1357','Estrada 1357','','Pergamino','Casa',65000,93,2,1,'','Terreno 107 m2, casa de 93 m2 cubiertos. En planta baja: garage, living, comedor, cocina, dormitorio, baño, lavadero, patio pequeño. En planta alta 1 dormitorio con baño.',['img/fb68b915f0d6.jpg','img/3bea879cecce.jpg','img/199604bee34b.jpg','img/0260a718a2da.jpg','img/1defb0e96e74.jpg']],
-    ['Merced 646','Merced 646','Centro','Pergamino','Local',null,115,null,1,'','Local de 115 m2 cubiertos con baño y cocina.',['img/3babd499cc6a.jpg','img/bdc2b4b0b86f.jpg','img/19072d3d2dff.jpg','img/7c33e01b0304.jpg']],
-    ['Ciudad Deportiva — Duplex','','Ciudad Deportiva','Pergamino','Duplex',null,null,4,1,'','En planta baja: living-comedor, cocina-comedor, toilette, 1 dormitorio/escritorio, galería y parque. En planta alta: 3 dormitorios y baño completo.',['img/36e9e0b618e1.jpg','img/ff619d09dfef.jpg','img/c2adfb44f1ef.jpg','img/7a8df08fd91e.jpg','img/b42cb6820724.jpg','img/e2b4ea651867.jpg']],
-    ['Ciudad Deportiva — Casa','','Ciudad Deportiva','Pergamino','Casa',null,270,3,3,'','270 m2 cubiertos. En planta baja: amplio living-comedor, cocina-comedor, 2 baños, galería, parrilla, guardacoche. En planta alta: 3 dormitorios (1 en suite con vestidor), otro baño completo, escritorio, balcón.',['img/2484eab5d6cc.jpg','img/64e21624b335.jpg','img/22e00b804eee.jpg','img/56c7516e3909.jpg','img/35efc94f6bf9.jpg','img/64e73496cf66.jpg','img/645bfb22c788.jpg','img/2484eab5d6cc.jpg','img/2484eab5d6cc.jpg']],
-    ['Sabino 1755','Sabino 1755','','Pergamino','Galpón',45000,145,null,null,'','Galpón de 145 m2 aproximadamente, terreno de 10 x 40, con techo de chapa y piso de cemento, portón pasante.',['img/c8e051c0afd7.jpg','img/498f1542d215.jpg','img/b2a1e49d8217.jpg','img/fbcd00350ba5.jpg','img/b1cfd1e57ea4.jpg','img/93a8cb61054a.jpg','img/e10e2c8b0970.jpg']],
-    ['Estrada 541','Estrada 541','Centro','Pergamino','Casa',null,346,4,2,'','Terreno 9,10 x 42, casa de 346 m2 cubiertos. En planta baja: living-comedor, cocina, comedor diario, toilette, garage doble, lavadero, habitación de servicio, depósito, quincho semicubierto, consultorio/oficina, jardín. En planta alta: 4 dormitorios (1 en suite), baño completo, toilette. Calefacción y aire acondicionado central.',['img/94fdd69f3bab.jpg','img/cf45250d512f.jpg','img/595ae4e6afff.jpg','img/219093229488.jpg','img/d45dc30e9913.jpg','img/86105c27a3da.jpg','img/f3713b84c3b6.jpg','img/bf88da5e0b50.jpg','img/b8d233ef142b.jpg','img/98932bd6c921.jpg']],
-  ];
-  const terrenosRaw = [
-    ['Gral Paz 1041','Gral Paz 1041','Centro','Pergamino',42000,150,'','Terreno de 12,50 mts de frente por 12 mts de fondo, ideal para cocheras.',['img/81dda2181763.jpg']],
-    ['B. Fernández Moreno esq. Guillaume','Fernández Moreno esq. Guillaume','Centro','Pergamino',35000,null,'','Mide 17 mts + 4,24 de ochava por calle Fernández Moreno, y 18 mts por calle Guillaume. Tiene gas natural y cloacas.',['img/821c95cbafb9.jpg']],
-    ['Terreno en Fontezuela','Calle Luis Valentini','','Fontezuelas',26000,672,'','El lote mide 16×42 y se encuentra en calle Luis Valentini, entre G. Coronel y Elena Peña.',['img/3b501c00d1de.jpg']],
-    ['Luar Kayad','Calle Las Maripositas','Luar Kayad','Pergamino',42000,930,'Destacado','Calle Las Maripositas entre Anémona y Azucena. Terreno de 930 m2, mide 20×46, frente al Empleados de Comercio.',['img/5d44579b9f5a.jpg']],
-    ['Club del Lago','Ruta 188 y 32','Club Del Lago','Pergamino',55000,800,'Destacado','Ruta 188 y 32. Lote de 20 mts de frente por 40 mts de fondo.',['img/75e8a248ea9a.jpg']],
-    ['San Gregorio','Lotes 78 y 79','San Gregorio','Pergamino',null,800,'','2 lotes 78 y 79, miden 20 x 40, con agua corriente, cloacas y gas a conectar.',['img/a2988424a68a.jpg']],
-    ['Fontezuela — Ruta 8 esq. Calle 12','Ruta 8 esq. Calle 12','','Fontezuelas',31000,600,'','Mide 15 x 40, piden U$S 31.000.',['img/c7951d04ca8b.jpg','img/89d06ba859d3.jpg']],
-  ];
-
-  const properties = propertiesRaw.map((r,i) => ({
-    id:'p'+i, titulo:r[0], direccion:r[1], barrio:r[2], ciudad:r[3], categoria:r[4],
-    precio:r[5], precioFmt:fmtPrice(r[5]), m2:r[6], hab:r[7], banos:r[8], tag:r[9], descripcion:r[10], fotos:r[11]
-  }));
-  const terrenos = terrenosRaw.map((r,i) => ({
-    id:'t'+i, titulo:r[0], direccion:r[1], barrio:r[2], ciudad:r[3],
-    precio:r[4], precioFmt:fmtPrice(r[4]), m2:r[5], tag:r[6], descripcion:r[7], categoria:'Terreno', fotos:r[8]
-  }));
+  let properties = [];
+  let terrenos = [];
+  const mapFetched = (r) => ({
+    ...r,
+    precio: r.precio == null ? null : Number(r.precio),
+    precioFmt: fmtPrice(r.precio == null ? null : Number(r.precio)),
+    m2: r.m2 == null ? null : Number(r.m2),
+    hab: r.hab == null ? null : Number(r.hab),
+    banos: r.banos == null ? null : Number(r.banos),
+    fotos: r.fotos || [],
+  });
+  try {
+    const res = await fetch('/api/properties');
+    const all = await res.json();
+    properties = all.filter(r => r.categoria !== 'Terreno').map(mapFetched);
+    terrenos = all.filter(r => r.categoria === 'Terreno').map(mapFetched);
+  } catch (err) {
+    console.error('No se pudieron cargar las propiedades', err);
+    document.getElementById('app').innerHTML = '<div style="padding:120px 20px;text-align:center">No se pudieron cargar las propiedades. Probá recargar la página.</div>';
+  }
 
   const CIUDADES = ['Pergamino','Fontezuelas'];
   const inRange = (val, range) => {

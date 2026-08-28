@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<title>Admin — VANAR Inmobiliaria</title>
+<style>
+  :root{
+    --bg:#f3f2f2; --text:#201e1d; --divider:color-mix(in srgb, #201e1d 20%, transparent);
+    --card:#fff; --accent:#128a49; --accent-600:#0d6e3a; --accent-700:#0a5730; --accent-100:#eafaf0;
+    --danger:#b81a17; --danger-100:#fdecec;
+    --r-sm:6px; --r-md:10px; --r-pill:999px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Archivo',system-ui,sans-serif;}
+  .wrap{max-width:1000px;margin:0 auto;padding:24px 20px 80px;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:#fff;border-bottom:2px solid var(--divider);}
+  .topbar h1{font-size:16px;margin:0;}
+  .btn{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:14px;padding:10px 18px;border:2px solid transparent;border-radius:var(--r-pill);cursor:pointer;text-decoration:none;font-family:inherit;}
+  .btn-primary{background:var(--accent-600);color:#fff;}
+  .btn-primary:hover{background:var(--accent-700);}
+  .btn-ghost{background:transparent;border-color:var(--text);color:var(--text);}
+  .btn-ghost:hover{background:var(--text);color:#fff;}
+  .btn-danger{background:var(--danger);color:#fff;}
+  .btn-danger:hover{background:#8f1412;}
+  .btn:disabled{opacity:.6;cursor:default;}
+  .card{background:var(--card);border-radius:var(--r-md);padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.07);margin-bottom:16px;}
+  .field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+  .field label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;}
+  .input{font-family:inherit;font-size:14px;padding:10px 14px;border:2px solid var(--divider);border-radius:var(--r-sm);background:#fff;color:var(--text);width:100%;}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+  textarea.input{min-height:90px;resize:vertical;}
+  .login-box{max-width:360px;margin:80px auto;}
+  .error{color:var(--danger);font-size:14px;margin:8px 0;}
+  table{width:100%;border-collapse:collapse;}
+  th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--divider);font-size:14px;vertical-align:middle;}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:color-mix(in srgb, var(--text) 55%, transparent);}
+  .thumb{width:52px;height:40px;object-fit:cover;border-radius:4px;background:#eee;}
+  .tag-pill{display:inline-block;background:var(--accent-100);color:var(--accent-700);font-size:11px;font-weight:700;padding:3px 10px;border-radius:var(--r-pill);}
+  .actions-cell{display:flex;gap:8px;}
+  .actions-cell button{font-size:12px;padding:6px 12px;}
+  .photo-grid{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0;}
+  .photo-grid .ph{position:relative;width:90px;height:70px;}
+  .photo-grid .ph img{width:100%;height:100%;object-fit:cover;border-radius:6px;}
+  .photo-grid .ph button{position:absolute;top:-6px;right:-6px;width:22px;height:22px;border-radius:50%;background:var(--danger);color:#fff;border:2px solid #fff;cursor:pointer;font-size:12px;line-height:1;padding:0;}
+  .hint{font-size:12px;color:color-mix(in srgb, var(--text) 55%, transparent);}
+  #toast{position:fixed;bottom:20px;right:20px;background:var(--text);color:#fff;padding:12px 18px;border-radius:var(--r-sm);font-size:14px;opacity:0;transform:translateY(10px);transition:.2s;pointer-events:none;}
+  #toast.show{opacity:1;transform:translateY(0);}
+  .form-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:6px;}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<div id="toast"></div>
+
+<script>
+(function(){
+  const CATEGORIAS = ['Casa','Departamento','Local','Duplex','Galpón','Terreno'];
+  let me = null;
+  let items = [];
+  let editing = null; // property being edited, or 'new'
+
+  function toast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  async function api(path, opts){
+    const res = await fetch(path, { headers: { 'Content-Type': 'application/json' }, ...opts });
+    if(res.status === 401){ me = null; render(); throw new Error('No autenticado'); }
+    if(!res.ok){ const body = await res.json().catch(()=>({})); throw new Error(body.error || 'Error de servidor'); }
+    return res.status === 204 ? null : res.json();
+  }
+
+  async function checkAuth(){
+    const r = await fetch('/api/me').then(r=>r.json());
+    me = r.authenticated ? r : null;
+  }
+
+  async function loadItems(){
+    items = await fetch('/api/properties').then(r=>r.json());
+    items.sort((a,b) => a.titulo.localeCompare(b.titulo));
+  }
+
+  function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function fmtPrice(n){ return n ? ('U$S ' + Number(n).toLocaleString('es-AR')) : 'Consultar precio'; }
+
+  function renderLogin(){
+    document.getElementById('root').innerHTML = `
+      <div class="wrap">
+        <div class="login-box card">
+          <h1 style="margin-top:0">Admin VANAR</h1>
+          <form id="loginForm">
+            <div class="field"><label for="u">Usuario</label><input class="input" id="u" name="username" required autofocus></div>
+            <div class="field"><label for="p">Contraseña</label><input class="input" id="p" name="password" type="password" required></div>
+            <div class="error" id="loginError" style="display:none"></div>
+            <button class="btn btn-primary" type="submit" style="width:100%;justify-content:center">Entrar</button>
+          </form>
+        </div>
+      </div>
+    `;
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const errEl = document.getElementById('loginError');
+      errEl.style.display = 'none';
+      try {
+        await api('/api/login', { method: 'POST', body: JSON.stringify({ username: fd.get('username'), password: fd.get('password') }) });
+        await checkAuth();
+        await loadItems();
+        render();
+      } catch(err){
+        errEl.textContent = err.message;
+        errEl.style.display = 'block';
+      }
+    });
+  }
+
+  function propertyRowHtml(p){
+    const thumb = p.fotos && p.fotos[0] ? `<img class="thumb" src="${esc(p.fotos[0])}">` : `<div class="thumb"></div>`;
+    return `
+      <tr>
+        <td>${thumb}</td>
+        <td>${esc(p.titulo)}${p.tag ? ` <span class="tag-pill">${esc(p.tag)}</span>` : ''}</td>
+        <td>${esc(p.categoria)}</td>
+        <td>${esc(p.ciudad)}${p.barrio ? ', '+esc(p.barrio) : ''}</td>
+        <td>${fmtPrice(p.precio)}</td>
+        <td class="actions-cell">
+          <button class="btn btn-ghost" data-edit="${p.id}">Editar</button>
+          <button class="btn btn-danger" data-delete="${p.id}">Borrar</button>
+        </td>
+      </tr>`;
+  }
+
+  function formHtml(p){
+    const isNew = !p.id;
+    return `
+      <div class="card">
+        <h2 style="margin-top:0">${isNew ? 'Nueva propiedad' : 'Editar propiedad'}</h2>
+        <form id="propForm">
+          <div class="field"><label for="f-titulo">Título</label><input class="input" id="f-titulo" name="titulo" required value="${esc(p.titulo)}"></div>
+          <div class="row2">
+            <div class="field"><label for="f-direccion">Dirección</label><input class="input" id="f-direccion" name="direccion" value="${esc(p.direccion)}"></div>
+            <div class="field"><label for="f-categoria">Categoría</label>
+              <select class="input" id="f-categoria" name="categoria" required>
+                ${CATEGORIAS.map(c => `<option value="${c}" ${p.categoria===c?'selected':''}>${c}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="f-ciudad">Ciudad</label><input class="input" id="f-ciudad" name="ciudad" value="${esc(p.ciudad)}" placeholder="Pergamino"></div>
+            <div class="field"><label for="f-barrio">Barrio</label><input class="input" id="f-barrio" name="barrio" value="${esc(p.barrio)}"></div>
+          </div>
+          <div class="row3">
+            <div class="field"><label for="f-precio">Precio (U$S, vacío = consultar)</label><input class="input" id="f-precio" name="precio" type="number" value="${p.precio ?? ''}"></div>
+            <div class="field"><label for="f-m2">m²</label><input class="input" id="f-m2" name="m2" type="number" value="${p.m2 ?? ''}"></div>
+            <div class="field"><label for="f-tag">Etiqueta</label>
+              <select class="input" id="f-tag" name="tag">
+                <option value="" ${!p.tag?'selected':''}>Ninguna</option>
+                <option value="Destacado" ${p.tag==='Destacado'?'selected':''}>Destacado</option>
+              </select>
+            </div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="f-hab">Dormitorios</label><input class="input" id="f-hab" name="hab" type="number" value="${p.hab ?? ''}"></div>
+            <div class="field"><label for="f-banos">Baños</label><input class="input" id="f-banos" name="banos" type="number" value="${p.banos ?? ''}"></div>
+          </div>
+          <div class="field"><label for="f-descripcion">Descripción</label><textarea class="input" id="f-descripcion" name="descripcion">${esc(p.descripcion)}</textarea></div>
+
+          <div class="field">
+            <label>Fotos</label>
+            <div class="photo-grid" id="photoGrid">
+              ${(p.fotos||[]).map((url,i) => `<div class="ph" data-url="${esc(url)}"><img src="${esc(url)}"><button type="button" data-remove-photo="${i}">×</button></div>`).join('')}
+            </div>
+            <input type="file" id="photoInput" accept="image/png,image/jpeg,image/webp" multiple>
+            <div class="hint">Máx 10MB por foto. Se suben al guardar.</div>
+          </div>
+
+          <div class="error" id="formError" style="display:none"></div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-ghost" id="cancelEdit">Cancelar</button>
+            <button type="submit" class="btn btn-primary" id="saveBtn">Guardar</button>
+          </div>
+        </form>
+      </div>
+    `;
+  }
+
+  function render(){
+    if(!me){ renderLogin(); return; }
+
+    const root = document.getElementById('root');
+    root.innerHTML = `
+      <div class="topbar">
+        <h1>Admin VANAR — propiedades</h1>
+        <div style="display:flex;gap:10px;align-items:center">
+          <span class="hint">${esc(me.username)}</span>
+          <button class="btn btn-ghost" id="logoutBtn">Salir</button>
+        </div>
+      </div>
+      <div class="wrap">
+        <div id="formSlot"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <div class="hint">${items.length} propiedades</div>
+          <button class="btn btn-primary" id="addBtn">+ Agregar propiedad</button>
+        </div>
+        <div class="card" style="padding:0;overflow:hidden">
+          <table>
+            <thead><tr><th></th><th>Título</th><th>Categoría</th><th>Ubicación</th><th>Precio</th><th></th></tr></thead>
+            <tbody>${items.map(propertyRowHtml).join('') || '<tr><td colspan="6" style="padding:24px;text-align:center">Sin propiedades todavía.</td></tr>'}</tbody>
+          </table>
+        </div>
+      </div>
+    `;
+
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      await api('/api/logout', { method: 'POST' });
+      me = null; items = [];
+      render();
+    });
+    document.getElementById('addBtn').addEventListener('click', () => openForm({}));
+    root.querySelectorAll('[data-edit]').forEach(btn => {
+      btn.addEventListener('click', () => openForm(items.find(i => i.id === btn.dataset.edit)));
+    });
+    root.querySelectorAll('[data-delete]').forEach(btn => {
+      btn.addEventListener('click', () => deleteItem(btn.dataset.delete));
+    });
+
+    if(editing) mountForm(editing);
+  }
+
+  function openForm(p){
+    editing = { id: p.id || null, titulo: p.titulo||'', direccion: p.direccion||'', barrio: p.barrio||'', ciudad: p.ciudad||'Pergamino',
+      categoria: p.categoria||'Casa', precio: p.precio ?? '', m2: p.m2 ?? '', hab: p.hab ?? '', banos: p.banos ?? '',
+      tag: p.tag||'', descripcion: p.descripcion||'', fotos: p.fotos ? [...p.fotos] : [] };
+    mountForm(editing);
+  }
+
+  function mountForm(p){
+    const slot = document.getElementById('formSlot');
+    slot.innerHTML = formHtml(p);
+    slot.scrollIntoView({ behavior: 'smooth' });
+
+    slot.querySelectorAll('[data-remove-photo]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        p.fotos.splice(Number(btn.dataset.removePhoto), 1);
+        mountForm(p);
+      });
+    });
+    document.getElementById('cancelEdit').addEventListener('click', () => { editing = null; render(); });
+    document.getElementById('propForm').addEventListener('submit', (e) => onSubmitForm(e, p));
+  }
+
+  async function uploadPhotos(files){
+    const urls = [];
+    for(const file of files){
+      const fd = new FormData();
+      fd.append('photo', file);
+      const res = await fetch('/api/upload', { method: 'POST', body: fd });
+      if(!res.ok){ const b = await res.json().catch(()=>({})); throw new Error(b.error || 'Error subiendo foto'); }
+      const body = await res.json();
+      urls.push(body.path);
+    }
+    return urls;
+  }
+
+  async function onSubmitForm(e, p){
+    e.preventDefault();
+    const saveBtn = document.getElementById('saveBtn');
+    const errEl = document.getElementById('formError');
+    errEl.style.display = 'none';
+    saveBtn.disabled = true; saveBtn.textContent = 'Guardando…';
+    try {
+      const fd = new FormData(e.target);
+      const fileInput = document.getElementById('photoInput');
+      let fotos = [...p.fotos];
+      if(fileInput.files.length){
+        const newUrls = await uploadPhotos(fileInput.files);
+        fotos = fotos.concat(newUrls);
+      }
+      const payload = {
+        titulo: fd.get('titulo'), direccion: fd.get('direccion'), barrio: fd.get('barrio'), ciudad: fd.get('ciudad'),
+        categoria: fd.get('categoria'), precio: fd.get('precio') || null, m2: fd.get('m2') || null,
+        hab: fd.get('hab') || null, banos: fd.get('banos') || null, tag: fd.get('tag') || null,
+        descripcion: fd.get('descripcion'), fotos,
+      };
+      if(p.id){
+        await api(`/api/properties/${p.id}`, { method: 'PUT', body: JSON.stringify(payload) });
+        toast('Propiedad actualizada');
+      } else {
+        await api('/api/properties', { method: 'POST', body: JSON.stringify(payload) });
+        toast('Propiedad creada');
+      }
+      editing = null;
+      await loadItems();
+      render();
+    } catch(err){
+      errEl.textContent = err.message;
+      errEl.style.display = 'block';
+      saveBtn.disabled = false; saveBtn.textContent = 'Guardar';
+    }
+  }
+
+  async function deleteItem(id){
+    const item = items.find(i => i.id === id);
+    if(!confirm(`¿Borrar "${item?.titulo}"? Esta acción no se puede deshacer.`)) return;
+    try {
+      await api(`/api/properties/${id}`, { method: 'DELETE' });
+      toast('Propiedad borrada');
+      await loadItems();
+      render();
+    } catch(err){
+      toast(err.message);
+    }
+  }
+
+  (async function boot(){
+    await checkAuth();
+    if(me) await loadItems();
+    render();
+  })();
+})();
+</script>
+</body>
+</html>

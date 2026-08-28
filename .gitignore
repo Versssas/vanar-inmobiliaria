@@ -1,2 +1,4 @@
 .DS_Store
 .impeccable/
+node_modules/
+data-uploads/
