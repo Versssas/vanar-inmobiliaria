@@ -32,11 +32,17 @@
   .input{font-family:inherit;font-size:14px;padding:10px 14px;border:2px solid var(--divider);border-radius:var(--r-sm);background:#fff;color:var(--text);width:100%;}
   .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
   .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+  @media (max-width:560px){
+    .row2,.row3{grid-template-columns:1fr;}
+    .topbar{flex-wrap:wrap;gap:10px;}
+  }
   textarea.input{min-height:90px;resize:vertical;}
   .login-box{max-width:360px;margin:80px auto;}
   .error{color:var(--danger);font-size:14px;margin:8px 0;}
-  table{width:100%;border-collapse:collapse;}
-  th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--divider);font-size:14px;vertical-align:middle;}
+  .table-wrap{overflow-x:auto;}
+  table{width:100%;min-width:640px;border-collapse:collapse;}
+  th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--divider);font-size:14px;vertical-align:middle;white-space:nowrap;}
+  td:nth-child(2){white-space:normal;min-width:160px;}
   th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:color-mix(in srgb, var(--text) 55%, transparent);}
   .thumb{width:52px;height:40px;object-fit:cover;border-radius:4px;background:#eee;}
   .tag-pill{display:inline-block;background:var(--accent-100);color:var(--accent-700);font-size:11px;font-weight:700;padding:3px 10px;border-radius:var(--r-pill);}
@@ -222,10 +228,12 @@
           <button class="btn btn-primary" id="addBtn">+ Agregar propiedad</button>
         </div>
         <div class="card" style="padding:0;overflow:hidden">
-          <table>
-            <thead><tr><th></th><th>Título</th><th>Categoría</th><th>Ubicación</th><th>Precio</th><th></th></tr></thead>
-            <tbody>${items.map(propertyRowHtml).join('') || '<tr><td colspan="6" style="padding:24px;text-align:center">Sin propiedades todavía.</td></tr>'}</tbody>
-          </table>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th></th><th>Título</th><th>Categoría</th><th>Ubicación</th><th>Precio</th><th></th></tr></thead>
+              <tbody>${items.map(propertyRowHtml).join('') || '<tr><td colspan="6" style="padding:24px;text-align:center;white-space:normal">Sin propiedades todavía.</td></tr>'}</tbody>
+            </table>
+          </div>
         </div>
       </div>
     `;
