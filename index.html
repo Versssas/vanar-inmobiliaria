@@ -283,10 +283,10 @@
   main.nosotros > p.lede{ font-size:17px; line-height:1.75; margin:0 0 40px; max-width:70ch; }
 
   .nosotros-hero{
-    position:relative; border-radius:var(--r-lg); overflow:hidden; min-height:300px; max-width:760px; margin-left:auto; margin-right:auto;
+    position:relative; border-radius:var(--r-lg); overflow:hidden; min-height:340px;
     display:flex; align-items:flex-end; color:#fff; margin-bottom:48px; box-shadow:var(--shadow-md); background:var(--accent-900);
   }
-  .nosotros-hero img{ position:absolute; inset:0; margin:auto; width:auto; height:auto; max-width:100%; max-height:100%; object-fit:contain; z-index:0; }
+  .nosotros-hero img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
   .nosotros-hero .overlay{
     position:absolute; inset:0; z-index:1;
     background:linear-gradient(0deg, rgba(7,38,21,.88) 0%, rgba(7,38,21,.35) 55%, rgba(7,38,21,.05) 100%);
@@ -773,14 +773,14 @@
       { title:'Compromiso', text:'Honestidad, ética y capacidad de adaptación a un mercado en constante evolución.' },
       { title:'Objetivo', text:'Ser el socio de confianza en el camino hacia la realización de sus sueños de propiedad.' },
     ];
-    const photos = ['img/ca43da121e31.jpg','img/ec5ff9cf20a7.jpg','img/b7e00a7bfdba.jpg','img/a47843ce9ece.jpg','img/760c83b3bcb7.jpg','img/41695cc5f59e.jpg'];
+    const photos = ['img/cf905fef243c.jpg','img/ec5ff9cf20a7.jpg','img/b7e00a7bfdba.jpg','img/a47843ce9ece.jpg','img/760c83b3bcb7.jpg','img/41695cc5f59e.jpg'];
     return `
       <div class="wrap">
         <h1>Nosotros</h1>
         <p class="lede">VANAR Inmobiliaria ha establecido un legado de 45 años de excelencia en el mercado inmobiliario de la vibrante ciudad de Pergamino. Durante este tiempo, hemos cultivado un prestigio inquebrantable que refleja nuestro compromiso con la satisfacción del cliente y la integridad en cada transacción.</p>
 
         <div class="nosotros-hero">
-          <img src="img/ca43da121e31.jpg" alt="Oficina de VANAR Inmobiliaria">
+          <img src="img/cf905fef243c.jpg" alt="Oficina de VANAR Inmobiliaria">
           <div class="overlay"></div>
           <div class="nosotros-hero-inner">
             <div class="big-num"><span class="count-up" data-count="45">45</span>+<span class="unit">años</span></div>
