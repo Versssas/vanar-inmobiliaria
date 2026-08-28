@@ -394,10 +394,13 @@
 
   /* ---------- Footer ---------- */
   footer{
-    background:#fff; box-shadow:0 -2px 10px rgba(32,30,29,.05); padding:28px 32px; display:flex; flex-wrap:wrap; gap:12px;
-    justify-content:space-between; font-size:12px; color:color-mix(in srgb, var(--text) 55%, transparent);
+    background:#fff; box-shadow:0 -2px 10px rgba(32,30,29,.05); padding:28px 32px; font-size:12px; color:color-mix(in srgb, var(--text) 55%, transparent);
   }
+  footer .row{ display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; }
   footer .right{ display:flex; gap:18px; flex-wrap:wrap; }
+  footer .credit{ margin-top:14px; padding-top:14px; border-top:1px solid var(--divider); text-align:center; }
+  footer .credit a{ color:inherit; text-decoration:underline; text-underline-offset:2px; }
+  footer .credit a:hover{ color:var(--accent-700); }
 
   [hidden]{ display:none !important; }
 
@@ -455,7 +458,8 @@
 
     .contact-form .row2{ grid-template-columns:1fr; }
 
-    footer{ flex-direction:column; align-items:flex-start; padding:22px 20px; }
+    footer{ padding:22px 20px; }
+    footer .row{ flex-direction:column; align-items:flex-start; }
     footer .right{ flex-direction:column; gap:4px; }
 
     .detalle-back{ padding:12px 20px 0; }
@@ -492,8 +496,11 @@
   </div>
 
   <footer>
-    <div>© 2026 VANAR Inmobiliaria — Saavedra 309, Pergamino, BA, Argentina</div>
-    <div class="right"><span>02477 428631 / 414849</span><span>contacto@vanarinmobiliaria.com.ar</span></div>
+    <div class="row">
+      <div>© 2026 VANAR Inmobiliaria — Saavedra 309, Pergamino, BA, Argentina</div>
+      <div class="right"><span>02477 428631 / 414849</span><span>contacto@vanarinmobiliaria.com.ar</span></div>
+    </div>
+    <div class="credit">Sitio creado por <a href="https://www.linkedin.com/in/jeremías-parra-9b785342b/" target="_blank" rel="noopener">Jeremías Parra</a></div>
   </footer>
 </div>
 
