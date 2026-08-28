@@ -141,9 +141,11 @@
         <td>${esc(p.categoria)}</td>
         <td>${esc(p.ciudad)}${p.barrio ? ', '+esc(p.barrio) : ''}</td>
         <td>${fmtPrice(p.precio)}</td>
-        <td class="actions-cell">
-          <button class="btn btn-ghost" data-edit="${p.id}">Editar</button>
-          <button class="btn btn-danger" data-delete="${p.id}">Borrar</button>
+        <td>
+          <div class="actions-cell">
+            <button class="btn btn-ghost" data-edit="${p.id}">Editar</button>
+            <button class="btn btn-danger" data-delete="${p.id}">Borrar</button>
+          </div>
         </td>
       </tr>`;
   }
