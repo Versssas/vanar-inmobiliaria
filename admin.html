@@ -44,8 +44,13 @@
   .actions-cell button{font-size:12px;padding:6px 12px;}
   .photo-grid{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0;}
   .photo-grid .ph{position:relative;width:90px;height:70px;}
-  .photo-grid .ph img{width:100%;height:100%;object-fit:cover;border-radius:6px;}
-  .photo-grid .ph button{position:absolute;top:-6px;right:-6px;width:22px;height:22px;border-radius:50%;background:var(--danger);color:#fff;border:2px solid #fff;cursor:pointer;font-size:12px;line-height:1;padding:0;}
+  .photo-grid .ph img{width:100%;height:100%;object-fit:cover;border-radius:6px;display:block;}
+  .photo-grid .ph .remove{position:absolute;top:-6px;right:-6px;width:22px;height:22px;border-radius:50%;background:var(--danger);color:#fff;border:2px solid #fff;cursor:pointer;font-size:12px;line-height:1;padding:0;}
+  .photo-grid .ph .move{position:absolute;bottom:2px;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;border:none;cursor:pointer;font-size:11px;line-height:1;padding:0;display:flex;align-items:center;justify-content:center;}
+  .photo-grid .ph .move-prev{left:2px;}
+  .photo-grid .ph .move-next{right:2px;}
+  .photo-grid .ph .move:disabled{opacity:.3;cursor:default;}
+  .photo-grid .ph .cover-badge{position:absolute;top:2px;left:2px;background:var(--accent-600);color:#fff;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;padding:2px 6px;border-radius:3px;}
   .hint{font-size:12px;color:color-mix(in srgb, var(--text) 55%, transparent);}
   #toast{position:fixed;bottom:20px;right:20px;background:var(--text);color:#fff;padding:12px 18px;border-radius:var(--r-sm);font-size:14px;opacity:0;transform:translateY(10px);transition:.2s;pointer-events:none;}
   #toast.show{opacity:1;transform:translateY(0);}
@@ -173,9 +178,16 @@
           <div class="field"><label for="f-descripcion">Descripción</label><textarea class="input" id="f-descripcion" name="descripcion">${esc(p.descripcion)}</textarea></div>
 
           <div class="field">
-            <label>Fotos</label>
+            <label>Fotos <span class="hint" style="text-transform:none;font-weight:400">(la primera es la portada; usá las flechas para reordenar)</span></label>
             <div class="photo-grid" id="photoGrid">
-              ${(p.fotos||[]).map((url,i) => `<div class="ph" data-url="${esc(url)}"><img src="${esc(url)}"><button type="button" data-remove-photo="${i}">×</button></div>`).join('')}
+              ${(p.fotos||[]).map((url,i) => `
+                <div class="ph" data-url="${esc(url)}">
+                  ${i===0 ? '<span class="cover-badge">Portada</span>' : ''}
+                  <img src="${esc(url)}">
+                  <button type="button" class="remove" data-remove-photo="${i}">×</button>
+                  <button type="button" class="move move-prev" data-move-photo="${i}" data-dir="-1" ${i===0?'disabled':''} title="Mover antes" aria-label="Mover antes">‹</button>
+                  <button type="button" class="move move-next" data-move-photo="${i}" data-dir="1" ${i===(p.fotos.length-1)?'disabled':''} title="Mover después" aria-label="Mover después">›</button>
+                </div>`).join('')}
             </div>
             <input type="file" id="photoInput" accept="image/png,image/jpeg,image/webp" multiple>
             <div class="hint">Máx 10MB por foto. Se suben al guardar.</div>
@@ -249,6 +261,15 @@
     slot.querySelectorAll('[data-remove-photo]').forEach(btn => {
       btn.addEventListener('click', () => {
         p.fotos.splice(Number(btn.dataset.removePhoto), 1);
+        mountForm(p);
+      });
+    });
+    slot.querySelectorAll('[data-move-photo]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const i = Number(btn.dataset.movePhoto);
+        const j = i + Number(btn.dataset.dir);
+        if(j < 0 || j >= p.fotos.length) return;
+        [p.fotos[i], p.fotos[j]] = [p.fotos[j], p.fotos[i]];
         mountForm(p);
       });
     });
