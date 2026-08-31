@@ -1200,7 +1200,8 @@
   function wireEvents(){
     const hamburger = document.getElementById('hamburger');
     const navlinks = document.getElementById('navlinks');
-    if(hamburger){
+    if(hamburger && !hamburger.dataset.wired){
+      hamburger.dataset.wired = '1';
       hamburger.addEventListener('click', () => {
         const isOpen = navlinks.classList.toggle('open');
         hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
