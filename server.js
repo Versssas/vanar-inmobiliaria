@@ -70,6 +70,7 @@ app.use(cookieParser());
 
 // ---- static site + uploaded photos ----
 app.use('/uploads', express.static(UPLOAD_DIR, { maxAge: '30d' }));
+app.use('/img', express.static(path.join(__dirname, 'img'), { maxAge: '30d', immutable: true }));
 app.use(express.static(__dirname, { extensions: ['html'] }));
 
 // ---- auth ----

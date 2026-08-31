@@ -225,7 +225,8 @@
     color:color-mix(in srgb, var(--text) 50%, transparent); position:relative; overflow:hidden;
   }
   .card .media.terreno{ height:150px; }
-  .card .media img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform .35s ease; }
+  .card .media img{ width:100%; height:100%; object-fit:cover; display:block; opacity:0; transition:transform .35s ease, opacity .35s ease; }
+  .card .media img.loaded{ opacity:1; }
   .card:hover .media img{ transform:scale(1.06); }
   .card .cat-pill{
     position:absolute; top:10px; left:10px; background:rgba(255,255,255,.94); color:var(--text);
@@ -604,7 +605,7 @@
     if(!isTerreno && item.hab) specs.push(`<span>${item.hab} dorm</span>`);
     if(!isTerreno && item.banos) specs.push(`<span>${item.banos} baños</span>`);
     const media = item.fotos && item.fotos[0]
-      ? `<img src="${item.fotos[0]}" alt="${esc(item.titulo)}" loading="lazy" decoding="async">`
+      ? `<img src="${item.fotos[0]}" alt="${esc(item.titulo)}" loading="lazy" decoding="async" onload="this.classList.add('loaded')">`
       : (isTerreno ? ICON_PIN : ICON_HOME);
     return `
       <div class="card" data-open="${item.id}">
